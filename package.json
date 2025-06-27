@@ -4,20 +4,25 @@
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
+    "start:clear": "expo start --clear",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
   "dependencies": {
     "@clerk/clerk-expo": "^2.13.1",
+    "@clerk/express": "^1.7.0",
     "@hookform/resolvers": "^5.1.1",
     "@tanstack/react-query": "^5.80.6",
     "expo": "~53.0.10",
+    "expo-auth-session": "~6.2.0",
     "expo-constants": "~17.1.6",
+    "expo-crypto": "~14.1.5",
     "expo-linking": "~7.1.5",
     "expo-router": "~5.0.7",
     "expo-secure-store": "^14.2.3",
     "expo-status-bar": "~2.2.3",
+    "expo-web-browser": "~14.1.6",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-hook-form": "^7.57.0",
@@ -26,9 +31,7 @@
     "react-native-screens": "~4.11.1",
     "react-native-web": "^0.20.0",
     "zod": "^3.25.62",
-    "expo-web-browser": "~14.1.6",
-    "expo-auth-session": "~6.2.0",
-    "expo-crypto": "~14.1.5"
+    "expo-dev-client": "~5.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

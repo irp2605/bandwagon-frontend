@@ -44,6 +44,7 @@ export default function VerifyScreen() {
     const { signUp, isLoaded, setActive } = useSignUp();
     const router = useRouter();
 
+
     const onVerify = async ({ code }: VerifyFields) => {
 
         if (!isLoaded) { return; }
@@ -54,8 +55,8 @@ export default function VerifyScreen() {
             });
 
             if (signUpAttempt.status === 'complete') {
-                setActive({ session: signUpAttempt.createdSessionId });
-                router.push('/(auth)/set-display-name?newUser=true');
+                await setActive({ session: signUpAttempt.createdSessionId });
+                router.replace('/(protected)/connect-spotify');
             } else {
                 // Handle other statuses (e.g., requires two-factor authentication)
                 console.log('Verification Status:', signUpAttempt.status);

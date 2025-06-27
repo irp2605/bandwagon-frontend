@@ -29,25 +29,35 @@ const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || 'http://localhost:3
 
 export default function SetDisplayNameScreen() {
 
-    const { getToken } = useAuth(); 
+    const { getToken } = useAuth();
 
     const { control, handleSubmit, setError, formState: { errors } } = useForm<DisplayNameFields>({
         resolver: zodResolver(displayNameSchema),
     });
 
-    
+
 
     const onSubmit = async (data: DisplayNameFields) => {
-        const token = await getToken(); 
+        try {
+            const token = await getToken();
+            if (!token) {
+                setError('root', { message: 'Authentication required' });
+                return;
+            }
 
-        fetch(API_BASE_URL + '/user/set-display-name', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
+            fetch(API_BASE_URL + '/user/set-display-name', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+        } catch (error) {
+            console.error('Error setting display name:', error);
+            setError('root', { message: 'Failed to set display name. Please try again.' });
+        }
+
 
         // TODO: HANDLE RESPONSE AND NAVIGATE AWAY OR SOMETHING
 
