@@ -32,7 +32,7 @@ export default function SetDisplayNameScreen() {
                 return;
             }
 
-            const response = await fetch('http://192.168.4.45:3000/api/spotify/get-auth-url', {
+            const response = await fetch('https://subtle-mackerel-civil.ngrok-free.app/api/spotify-auth/get-auth-url', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -57,14 +57,8 @@ export default function SetDisplayNameScreen() {
 
             console.log('WebBrowser result:', result); // Add this line
 
-            if (result.type === 'success') {
-                console.log('Result URL:', result.url); // Add this line
-                // ... rest of your code
-            }
 
             if (result.type === 'success') {
-                // The backend already handled token exchange in the callback
-                // Just check if the URL indicates success or failure
                 const url = new URL(result.url);
                 const success = url.searchParams.get('success');
                 const error = url.searchParams.get('error');
@@ -73,12 +67,14 @@ export default function SetDisplayNameScreen() {
                     console.error('Spotify authorization error:', error);
                 } else if (success) {
                     console.log('Spotify authorization successful!');
-                    router.push('/(protected)/set-display-name');
+                    router.push('/(protected)/get-location');
                 } else {
                     console.log('Authorization completed but something weird happened');
                 }
             } else if (result.type === 'cancel') {
                 console.log('User cancelled authorization');
+            } else {
+                router.push('/(protected)/get-location');
             }
         } catch (error) {
             console.error('Error authorizing Spotify:', error);
